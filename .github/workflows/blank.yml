@@ -1,21 +1,23 @@
-name: CI
-on:
-  pull_request_target:
-    types: [ labeled ]
+name: Receive PR
 
-env:
-  imageregistry: 'quay.io'
-  imagenamespace: ${{ secrets.IMAGENAMESPACE || secrets.QUAY_USERNAME }}
-  latesttag: latest
+# read-only repo token
+# no access to secrets
+on:
+  pull_request:
 
 jobs:
-
-  check-secrets:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Check secrets are set
-        id: have-secrets
-        if: ${{ github.event.label.name == 'lgtm' }}
-        run: echo "::set-output name=ok::true"
-    outputs:
-      have-secrets: ${{ steps.have-secrets.outputs.ok }}
+
+    steps:        
+      - uses: actions/checkout@v2
+
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/
