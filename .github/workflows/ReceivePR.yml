@@ -15,7 +15,8 @@ jobs:
       - name: Save PR number
         run: |
           mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/NR
+          echo ${{github.event.pull_request.head.repo.full_name}} > ./pr/repo_full_name
+          echo ${{ github.head_ref }} > ./pr/repo_head_ref
           
       - uses: actions/upload-artifact@v2
         with:
