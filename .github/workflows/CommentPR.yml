@@ -37,4 +37,5 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - run: ls ${{github.workspace}}
-      - run: cat ${{github.workspace}}/NR
+      - run: cat ${{github.workspace}}/repo_full_name
+      - run: cat ${{github.workspace}}/repo_head_ref
