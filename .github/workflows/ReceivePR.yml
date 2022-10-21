@@ -15,10 +15,6 @@ jobs:
       - uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: safetotest
+          number: ${{ github.event.pull_request.number }}
 
-  build:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'safetotest')
-    steps:        
-      - uses: actions/checkout@v2    
+   
