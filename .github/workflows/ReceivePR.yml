@@ -2,23 +2,13 @@ name: Receive PR
 
 # read-only repo token
 # no access to secrets
+
 on:
   pull_request_target:
+    types: [labeled]
 
 jobs:
   build:
+    name: Build and test
     runs-on: ubuntu-latest
-
-    steps:        
-      - uses: actions/checkout@v2
-
-      - name: Save PR number
-        run: |
-          mkdir -p ./pr
-          echo ${{github.event.pull_request.head.repo.full_name}} > ./pr/repo_full_name
-          echo ${{ github.head_ref }} > ./pr/repo_head_ref
-          
-      - uses: actions/upload-artifact@v2
-        with:
-          name: pr
-          path: pr/
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test')
