@@ -12,3 +12,5 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'safe to test')
+    steps:        
+      - uses: actions/checkout@v2    
